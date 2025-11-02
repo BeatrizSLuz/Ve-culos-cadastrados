@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veículos Cadastrados</title>
+  <link rel="stylesheet" href="veiculos-cadastrados.css">
+</head>
+<body>
+  
+    <!-- Botão menu -->
+  <div class="menu-btn" id="menu-btn">☰</div>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <ul>
+      <li><a href="https://beatrizsluz.github.io/tela-inicial/">Tela Inicial</a></li>
+      <li><a href="https://beatrizsluz.github.io/cadastrar-veiculos/">Cadastrar Novo Veículo</a></li>
+      <li><a href="#">Veículos Cadastrados</a></li>
+      <li><a href="#">Meus Dados</a></li>
+      <li class="logout"><a href="https://beatrizsluz.github.io/tela-de-login-BMS/">⎋ Sair</a></li>
+    </ul>
+  </div>
+  <div class="overlay" id="overlay"></div>
+  
+
+  
+
+  <main class="content">
+    <div class="title">Acessar veículos cadastrados</div>
+
+    <div class="search-box">
+      <input type="text" placeholder="Buscar veículo..." />
+      <button class="search-btn">🔍</button>
+    </div>
+
+    <div class="vehicle-list">
+      <div class="vehicle-item">
+        <img src="siena1.jpg" alt="Siena Vermelho">
+        <div class="vehicle-info">
+          <a href="https://beatrizsluz.github.io/Siena-vermelho-Marcos/" class="vehicle-name">SIENA VERMELHO - MARCOS</a>
+          <p class="vehicle-plate">Placa: OLX123</p>
+        </div>
+      </div>
+
+      <div class="vehicle-item">
+        <img src="siena2.jpg" alt="Siena Vermelho">
+        <div class="vehicle-info">
+          <a href="#" class="vehicle-name">SIENA VERMELHO - PAULO</a>
+          <p class="vehicle-plate">Placa: BBC764</p>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script>
+    const menuBtn = document.getElementById("menu-btn");
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+
+    menuBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("active");
+      overlay.classList.toggle("active");
+    });
+
+    overlay.addEventListener("click", () => {
+      sidebar.classList.remove("active");
+      overlay.classList.remove("active");
+    });
+  </script>
+</body>
+</html>
