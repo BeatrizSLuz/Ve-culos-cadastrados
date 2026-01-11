@@ -24,17 +24,18 @@
   <div class="overlay" id="overlay"></div>
   
 
+
   
 
   <main class="content">
     <div class="title">Acessar veículos cadastrados</div>
 
     <div class="search-box">
-      <input type="text" placeholder="Buscar veículo..." />
-      <button class="search-btn">🔍</button>
+      <input id="searchInput" type="text" placeholder="Buscar veículo..." />
+      <button id="searchBtn" class="search-btn">🔍</button>
     </div>
 
-    <div class="vehicle-list">
+    <div id="vehicleList" class="vehicle-list">
       <div class="vehicle-item">
         <img src="siena1.jpg" alt="Siena Vermelho">
         <div class="vehicle-info">
@@ -66,6 +67,75 @@
       sidebar.classList.remove("active");
       overlay.classList.remove("active");
     });
+
+    
+
+  
+  
+  function carregarVeiculos(filtro = "") {
+    const listaHTML = document.getElementById("vehicleList");
+    listaHTML.innerHTML = "";
+
+    const veiculos = JSON.parse(localStorage.getItem("veiculos")) || [];
+
+    const filtrados = veiculos.filter(v =>
+      (v.proprietario?.toLowerCase() || "").includes(filtro.toLowerCase()) ||
+      (v.placa_modelo?.toLowerCase() || "").includes(filtro.toLowerCase()) ||
+      (v.funcionario?.toLowerCase() || "").includes(filtro.toLowerCase()) ||
+      (v.servico?.toLowerCase() || "").includes(filtro.toLowerCase()) ||
+      (v.placa_modelo?.split(" ")[0] || "").toLowerCase().includes(filtro.toLowerCase())
+    );
+
+    // Se não encontrar
+    if (filtrados.length === 0) {
+      listaHTML.innerHTML = "<p style='color:#bbb;'>Nenhum veículo encontrado.</p>";
+      return;
+    }
+
+   //criar itens
+    filtrados.forEach(v => {
+      const item = document.createElement("div");
+      item.className = "vehicle-item";
+
+      // Foto 
+      const imagem = v.foto_chegada || "imagem_padrao.jpg";
+
+      item.innerHTML = `
+        <img src="${imagem}" alt="Veículo">
+        <div class="vehicle-info">
+          <a class="vehicle-name">${v.proprietario?.toUpperCase() || "SEM NOME"}</a>
+          <p class="vehicle-plate">Placa/Modelo: ${v.placa_modelo}</p>
+          <p style="color:#aaa; font-size:0.8rem;">Serviço: ${v.servico}</p>
+        </div>
+      `;
+
+      item.onclick = () => {
+        window.location.href = `cadastrarveiculo.html?id=${v.id}&view=1`;
+      };
+
+
+      listaHTML.appendChild(item);
+    });
+  }
+
+  // busca
+  document.getElementById("searchBtn").addEventListener("click", () => {
+    const texto = document.getElementById("searchInput").value;
+    carregarVeiculos(texto);
+  });
+
+  document.getElementById("searchInput").addEventListener("keyup", (e) => {
+    carregarVeiculos(e.target.value);
+  });
+
+  
+  carregarVeiculos();
+  
+  
+
+
   </script>
 </body>
 </html>
+
+
